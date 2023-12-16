@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Role" ALTER COLUMN "name" SET DATA TYPE TEXT;
