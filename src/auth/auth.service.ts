@@ -1,7 +1,7 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { Role as PrismaRole, User } from '@prisma/client';
+import { User, Role } from '.prisma/client/edge';
 import * as argon from 'argon2';
 import { PrismaService } from '../prisma/prisma.service';
 
@@ -25,7 +25,7 @@ export class AuthService {
       },
     })
 
-    if (!isNumber(userRole.id)) {
+    if (!isNumber(userRole?.id)) {
       userRole = await this.prisma.role.create({
         data: {
           name: "USER"
@@ -39,7 +39,7 @@ export class AuthService {
         hash,
         role: {
           connect: {
-            id: userRole.id,
+            id: userRole?.id,
           },
         },
       },
@@ -49,7 +49,7 @@ export class AuthService {
       }
       throw error;
     });
-
+    if (!userRole) throw new ForbiddenException('Credential incorect');
     const tokens = await this.getTokens(user.id, user.email, userRole.name);
     await this.updateRtHash(user.id, tokens.refresh_token);
 
@@ -57,18 +57,15 @@ export class AuthService {
   }
 
   async signinLocal(dto: AuthDto): Promise<Tokens> {
-    console.log("dto", dto);
     const user = await this.prisma.user.findUnique({
       where: {
         email: dto.email,
       },
     });
-    console.log("user", user?.hash);
 
     if (!user) throw new ForbiddenException('Access Denied');
 
     const passwordMatches = await argon.verify(user.hash, dto.password);
-    console.log("pm", passwordMatches);
     if (!passwordMatches) throw new ForbiddenException('Access Denied');
 
     const role = await this.prisma.role.findUnique({
@@ -92,11 +89,12 @@ export class AuthService {
   }
 
   async getUserById(userId: number): Promise<User> {
-    const users = await this.prisma.user.findMany({
+    const users = await this.prisma.user.findUnique({
       where: {
         id: Number(userId),
       }
     });
+    if (!users) throw new ForbiddenException("Something went wrong")
     return users;
   }
 
@@ -227,7 +225,7 @@ export class AuthService {
     });
   }
 
-  async getTokens(userId: number, email: string, role: PrismaRole['name']): Promise<Tokens> {
+  async getTokens(userId: number, email: string, role: Role['name']): Promise<Tokens> {
     const jwtPayload: JwtPayload = {
       sub: userId,
       email: email,

@@ -16,7 +16,7 @@ import { RtGuard, AdminGuard } from '../common/guards';
 import { AuthService } from './auth.service';
 import { AuthDto, UpdateDto } from './dto';
 import { Tokens } from './types';
-import { User } from '@prisma/client';
+import { User } from '.prisma/client/edge';
 
 @Controller('auth')
 export class AuthController {
@@ -33,7 +33,6 @@ export class AuthController {
   @Post('local/signin')
   @HttpCode(HttpStatus.OK)
   signinLocal(@Body() dto: AuthDto): Promise<Tokens> {
-    console.log(dto);
     return this.authService.signinLocal(dto);
   }
 
@@ -41,7 +40,7 @@ export class AuthController {
   @UseGuards(AdminGuard)
   @HttpCode(HttpStatus.ACCEPTED)
   @UseGuards(AdminGuard)
-  getAllUsers(): Promise<any[]> {
+  getAllUsers(): Promise<User[]> {
     return this.authService.getAllUser();
   }
 
@@ -49,7 +48,7 @@ export class AuthController {
   @UseGuards(AdminGuard)
   @HttpCode(HttpStatus.ACCEPTED)
   @UseGuards(AdminGuard)
-  getUsersById(@Param('id') userId: number): Promise<User[]> {
+  getUsersById(@Param('id') userId: number): Promise<User> {
     return this.authService.getUserById(userId);
   }
 
@@ -59,7 +58,7 @@ export class AuthController {
   updateUserDataByID(
     @Param('id') userId: number,
     @Body() dto: UpdateDto,
-  ): Promise<string> {
+  ): Promise<User> {
     return this.authService.updateUserData(userId, dto, true);
   }
 
@@ -71,7 +70,7 @@ export class AuthController {
   }
 
   //If Admin Want to delete some user
-  @Delete('admin/delete/:id')
+  @Delete('local/delete/:id')
   @HttpCode(HttpStatus.ACCEPTED)
   @UseGuards(AdminGuard)
   deleteUserThrouhAdmin(@Param('id') userId: number): Promise<string> {
