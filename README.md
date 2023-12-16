@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# Role Based Access Control
-=======
-
 # Role Based Acces Control Using NEST JS & Prisma with JWT Authenticatiom
 
 This repository contains a Role-Based Access Control (RBAC) system implementation. RBAC is a widely used approach in access control systems that restrict system access to authorized users based on their roles within an organization.
