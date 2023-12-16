@@ -5,9 +5,9 @@ This repository contains a Role-Based Access Control (RBAC) system implementatio
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/) installed
-- [Docker](https://www.docker.com/) installed
-- [Docker Compose](https://docs.docker.com/compose/install/) installed
+- [Node.js](https://nodejs.org/) 
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Features
 
@@ -21,13 +21,13 @@ This repository contains a Role-Based Access Control (RBAC) system implementatio
 1. Clone the repository:
 
    ```bash
-    https://github.com/Shivam1272/RoleBaseAccessControl.git
+      https://github.com/Shivam1272/RoleBasedAccessControl.git
    ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd RoleBaseAccessControl
+    cd RoleBasedAccessControl
     ```
 
 3. Install Dependencie
