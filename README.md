@@ -111,3 +111,11 @@ To run this project, you will need to add the following environment variables to
     - Retrive ALL User (Only Accessible by Admin)
         - Endpoint: `/auth/local/users`
         - Method: `GET`
+   <img width="624" alt="image" src="https://github.com/Shivam1272/RoleBaseAccessControl/assets/96972819/7baebfd0-1dcf-494e-894a-013105b1c0ff">
+
+
+## Acknowledgements
+
+ - Feel free to reach out to the project owner, **Shivam1272**, with any questions or concerns.
+
+
