@@ -111,4 +111,3 @@ To run this project, you will need to add the following environment variables to
     - Retrive ALL User (Only Accessible by Admin)
         - Endpoint: `/auth/local/users`
         - Method: `GET`
->>>>>>> fbdf09d541f269119ed53446ecdfe95d35dced57
